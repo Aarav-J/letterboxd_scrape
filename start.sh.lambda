@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Execute the handler directly - no need for Redis server with fakeredis
+exec python -m awslambdaric letterboxdscraper.handler

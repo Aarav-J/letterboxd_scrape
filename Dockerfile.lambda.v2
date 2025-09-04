@@ -1,0 +1,11 @@
+FROM amazon/aws-lambda-python:3.8
+
+# Copy function code
+COPY letterboxdscraper.py ${LAMBDA_TASK_ROOT}/
+COPY requirements.txt ${LAMBDA_TASK_ROOT}/
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Set the CMD to your handler
+CMD [ "letterboxdscraper.handler" ]

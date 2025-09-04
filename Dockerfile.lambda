@@ -1,0 +1,18 @@
+FROM public.ecr.aws/lambda/python:3.8
+
+# Copy function code
+COPY letterboxdscraper.py ${LAMBDA_TASK_ROOT}
+COPY requirements.txt ${LAMBDA_TASK_ROOT}
+
+# No need for Redis server, we'll use fakeredis
+RUN pip install --no-cache-dir fakeredis
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the startup script
+COPY start.sh.lambda ${LAMBDA_TASK_ROOT}/start.sh
+RUN chmod +x ${LAMBDA_TASK_ROOT}/start.sh
+
+# Set the CMD to our handler
+CMD ["letterboxdscraper.handler"]
